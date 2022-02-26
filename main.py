@@ -56,7 +56,7 @@ def confirm2(update: Update, context: CallbackContext):
             return CONFIRM
         elif state == "ic":
             context.bot.send_message(chat_id=update.message.chat.id, text="Registration successful")
-            register_user(update.message.chat.id, store)
+            register_user(update.message.from_user.id, store)
             return ConversationHandler.END
     else:
         if state == "name":
@@ -98,7 +98,7 @@ def main() -> None:
 
     updater.start_polling()
     updater.idle()
-
+    close()
 
 if __name__ == '__main__':
     main()
