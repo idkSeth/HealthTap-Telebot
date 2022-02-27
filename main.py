@@ -71,7 +71,7 @@ def done(update: Update, context: CallbackContext) -> int:
     context.bot.send_message(chat_id=update.message.chat.id, text="Registration unsuccessful")
     return ConversationHandler.END
 
-REGISTER_NAME, REGISTER_DOB, REGISTER_IC, CONFIRM, CONFIRM2, DONE  = range(6)
+REGISTER, CONFIRM, CONFIRM2, DONE  = range(4)
 
 def bills(update: Update, context: CallbackContext) -> None:
     u_id = get_user_id(update.message.chat.id)
