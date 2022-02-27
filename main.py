@@ -73,6 +73,31 @@ def done(update: Update, context: CallbackContext) -> int:
 
 REGISTER_NAME, REGISTER_DOB, REGISTER_IC, CONFIRM, CONFIRM2, DONE  = range(6)
 
+def bills(update: Update, context: CallbackContext) -> None:
+    u_id = get_user_id(update.message.chat.id)
+    bills = get_user_bills(u_id)
+    update.message.reply_text("Your bills")    
+    for i in bills:
+        context.bot.send_message(chat_id=update.message.chat.id, text=f"{i[0]} Amount: {i[1]} Date: {i[2]} Info: {i[3]}")
+
+def medicine(update: Update, context: CallbackContext) -> None:
+    u_id = get_user_id(update.message.chat.id)
+    user_med = get_user_medicine(u_id)
+    update.message.reply_text("Your prescribed medicines, select one for more information and options")
+    for i in user_med:
+        context.bot.send_message(chat_id=update.message.chat.id, text=f"Dosage: {i[1]} Frequency: {i[2]} Info: {i[3]}")
+        
+def appointments(update: Update, context: CallbackContext) -> None:
+    u_id = get_user_id(update.message.chat.id)
+    appointments = get_user_appointments(u_id)
+    update.message.reply_text("Your appointments, select one for more options")
+    for i in appointments:
+        context.bot.send_message(chat_id=update.message.chat.id, text=f"{i[0]} Date: {i[1]} Location: {i[2]} Status: {i[3]} Info: {i[4]}")
+    
+
+def human(update: Update, context: CallbackContext) -> None:
+    update.message.reply_text("To continue with a live chat select a support category below")
+          
 def main() -> None:
     updater = Updater(TOKEN)
 
@@ -82,6 +107,10 @@ def main() -> None:
     dispatcher.add_handler(CommandHandler("start", start))
     dispatcher.add_handler(CommandHandler("help", help_command))
     dispatcher.add_handler(CommandHandler("user", user))
+    dispatcher.add_handler(CommandHandler("bills", bills))
+    dispatcher.add_handler(CommandHandler("medicine", medicine))
+    dispatcher.add_handler(CommandHandler("appointments", appointments))
+    dispatcher.add_handler(CommandHandler("human", human))
     
     conv_handler = ConversationHandler(
             entry_points = [CommandHandler("register", register)],

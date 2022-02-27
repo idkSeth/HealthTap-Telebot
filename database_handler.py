@@ -55,19 +55,26 @@ def get_medicine_info(medicine_id):
     db.close()
     return medcine
 
-def get_user_medicines(user_id):
+def get_user_medicine(user_id):
     db = connect("database.db")
     c = db.cursor()
     medicines = c.execute('''SELECT medicine_id, dosage, frequency, info FROM user_medicine WHERE user_id = user_id''').fetchall()
     db.close()
     return medicines
 
-def get_user_billd(user_id):
+def get_user_bills(user_id):
     db = connect("database.db")
     c = db.cursor()
     bills = c.execute('''SELECT bill_id, amount, date, info FROM user_bills WHERE user_id = user_id''').fetchall()
     db.close()
     return bills
+
+def get_user_appointments(user_id):
+    db = connect("database.db")
+    c = db.cursor()
+    appointments = c.execute('''SELECT appointment_id, date, location, status, info FROM user_appointments WHERE user_id = user_id''').fetchall()
+    db.close()
+    return appointments
 
 def close():
     db.close()
